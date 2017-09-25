@@ -42,7 +42,7 @@ def soundplay():
     pygame.mixer.music.load('MarioThemeSong.wav')
 
     pygame.mixer.music.play(-1)
-    while pygame.mixer.music.get_busy() and flagsound < 100:
+    while pygame.mixer.music.get_busy() and flagsound < 1:
         flagsound = flagsound + 1
         print(flagsound)
         #print("Playing", pygame.mixer.music.get_pos())
