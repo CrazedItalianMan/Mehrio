@@ -32,6 +32,21 @@ yPlayerSize = 10
 
 FPS = 60
 
+flagsound = 0
+soundstop = 0
+
+
+def soundplay():
+    flagsound = 0
+    pygame.mixer.init()
+    pygame.mixer.music.load('MarioThemeSong.wav')
+
+    pygame.mixer.music.play(-1)
+    while pygame.mixer.music.get_busy() and flagsound < 100:
+        flagsound = flagsound + 1
+        print(flagsound)
+        #print("Playing", pygame.mixer.music.get_pos())
+
 
 def message_to_screen(title_message, color, display_font, x_location, y_location):
     font = pygame.font.SysFont(None, display_font)
@@ -85,6 +100,8 @@ while not gameExit:
     pygame.display.update()
 
     gameClock.tick(FPS)
-
+    if soundstop < 1:
+        soundplay()
+        soundstop = soundstop + 1
 pygame.quit()
 quit()
