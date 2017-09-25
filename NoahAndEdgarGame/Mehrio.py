@@ -60,18 +60,18 @@ while not gameExit:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 player_x_change = 0
 
-            if player_x <= 0:
-                player_x += 5
-                player_y += 0
-            if player_x >= 790:
-                player_x -= 5
-                player_y += 0
-            if player_y <= 0:
-                player_x += 0
-                player_y += 5
-            if player_y >= 590:
-                player_x += 0
-                player_y -= 5
+    if player_x <= 0:
+        player_x += 5
+        player_y += 0
+    if player_x >= 790:
+        player_x -= 5
+        player_y += 0
+    if player_y <= 0:
+        player_x += 0
+        player_y += 5
+    if player_y >= 590:
+        player_x += 0
+        player_y -= 5
 
     player_x += player_x_change
     player_y += player_y_change
