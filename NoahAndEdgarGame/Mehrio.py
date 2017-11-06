@@ -1,5 +1,7 @@
 import pygame
-import time
+import sys
+
+from MarioCharacter import Mario
 
 pygame.init()
 
@@ -13,6 +15,7 @@ gameDisplayWidth = 800
 gameDisplayHeight = 600
 
 gameDisplay = pygame.display.set_mode((gameDisplayWidth, gameDisplayHeight))
+menuDisplay = pygame.display.set_mode((gameDisplayWidth, gameDisplayHeight))
 
 pygame.display.set_caption('Mehrio')
 
@@ -62,11 +65,11 @@ while not gameExit:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 player_y_change = -movementSpeed
-            elif event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN:
                 player_y_change = movementSpeed
-            elif event.key == pygame.K_LEFT:
+            if event.key == pygame.K_LEFT:
                 player_x_change = -movementSpeed
-            elif event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_RIGHT:
                 player_x_change = movementSpeed
 
         if event.type == pygame.KEYUP:
@@ -92,11 +95,12 @@ while not gameExit:
     player_y += player_y_change
 
     gameDisplay.fill(WHITE)
-    pygame.draw.rect(gameDisplay, BLACK, [player_x, player_y, xPlayerSize, yPlayerSize])
+    MarioCharacter = Mario(gameDisplay)
     message_to_screen("Welcome to Mehrio", RED, 120, 15, 15)
     message_to_screen("Created By Noah Arias and Edgar Mateos-Chavez", BLACK, 15, 15, 100)
     message_to_screen("Special Thanks to Michael Acquistapace for being himself", BLACK, 15, 15, 115)
 
+    MarioCharacter.blitme()
     pygame.display.update()
 
     gameClock.tick(FPS)
