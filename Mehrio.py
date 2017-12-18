@@ -2,11 +2,16 @@ import pygame
 import sys
 
 from MarioCharacter import Mario
+from Enemy import Enemy
+import random
 
 pygame.init()
 
 MARIO_HEIGHT = 35
 MARIO_WIDTH = 25
+
+ENEMY_HEIGHT = 50
+ENEMY_WIDTH = 50
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -39,6 +44,8 @@ scrolliness = 0
 
 is_running = False
 
+enemies = []
+
 gameClock = pygame.time.Clock()
 
 XmovementSpeed = 3
@@ -54,12 +61,44 @@ soundstop = 0
 i = 0
 counter = 0
 
+#Zach Walravens named this function
+def memeAttackModeActivatedOneMemeOnTheRocksEsketit():
+    enemies.append(Enemy(gameDisplay, gameDisplayWidth, gameDisplayHeight, ENEMY_WIDTH, ENEMY_HEIGHT,
+                         random.randint(-100, 100), scrolliness, "Dab Emoji.png"))
+
+def detectCollisions(thisEnemy):
+    px = player_x
+    py = player_y
+    pw = xPlayerSize
+    ph = yPlayerSize
+
+    mx = thisEnemy.currentX
+    my = thisEnemy.currentY
+    mw = thisEnemy.width
+    mh = thisEnemy.height
+
+    if (px + pw > mx) and (px < mx + mw) and (py + ph > my) and (py < my + mh):
+
+        print("player_x: " + str(px))
+        print(str("player_y: ") + str(py))
+        print(str("xPlayerSize: ") + str(pw))
+        print(str("yPlayerSize: ") + str(ph))
+
+        print(str("thisEnemy.currentX: ") + str(mx))
+        print(str("thisEnemy.currentY: ") + str(my))
+        print(str("thisEnemy.width: ") + str(mw))
+        print(str("thisEnemy.height: ") + str(mh))
+
+        pygame.quit()
+        quit()
+
 def soundplay():
     flagsound = 0
     pygame.mixer.init()
     pygame.mixer.music.load('MarioThemeSong.wav')
 
     pygame.mixer.music.play(-1)
+
     while pygame.mixer.music.get_busy() and flagsound < 1:
         flagsound = flagsound + 1
         print(flagsound)
@@ -69,11 +108,13 @@ def message_to_screen(title_message, color, display_font, x_location, y_location
     screen_message = font.render(title_message, True, color)
     gameDisplay.blit(screen_message, [x_location, y_location])
 
-
 while not gameExit:
     counter += 1
     if counter % 10 == 0:
         i += 1
+
+    if counter % 100/(100 + 100*counter) == 0:
+        memeAttackModeActivatedOneMemeOnTheRocksEsketit()
 
     #makes gravity exist
     if player_y < gameDisplayHeight + MARIO_HEIGHT:
@@ -130,7 +171,12 @@ while not gameExit:
 
     backgroundImage = pygame.transform.scale(backgroundImage, (gameDisplayWidth, gameDisplayHeight))
     gameDisplay.blit(backgroundImage, pygame.Rect(scrolliness, 0, gameDisplayWidth, gameDisplayHeight))
+
     MarioCharacter.blitme(player_x, player_y, is_running, i)
+
+    for each in enemies:
+        each.blitme(scrolliness)
+
     message_to_screen("Welcome to Mehrio", RED, 120, 15, 15)
     message_to_screen("Created By Noah Arias and Edgar Mateos-Chavez", BLACK, 15, 15, 100)
     message_to_screen("Special Thanks to Michael Acquistapace for being himself", BLACK, 15, 15, 145)
@@ -141,5 +187,9 @@ while not gameExit:
     if soundstop < 1:
         soundplay()
         soundstop = soundstop + 1
+
+    for each in enemies:
+        detectCollisions(each)
+
 pygame.quit()
 quit()

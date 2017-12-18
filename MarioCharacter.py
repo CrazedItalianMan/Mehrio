@@ -1,5 +1,4 @@
 import pygame
-import sys
 
 class Mario():
 
@@ -8,6 +7,7 @@ class Mario():
         self.gameDisplay = gameDisplay
 
     #Now loading Mario and getting his rectangular area/hitbox
+        self.potato = "dat ass"
         self.image1 = pygame.image.load('WhiteArmyMario.jpg')
         self.image1 = pygame.transform.scale(self.image1, (width, height))
         self.rect1 = self.image1.get_rect()
